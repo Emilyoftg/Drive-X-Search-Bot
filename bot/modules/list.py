@@ -11,10 +11,10 @@ def list_drive(update,context):
         if "'"in search:
             search = search.replace("'", "\\'")
     except IndexError:
-        sendMessage('send a search key along with command', context.bot, update)
+        sendMessage('<b>Follow These Steps 👇:\nSend A Keyword Along With Search Command.\nExample 👉:</b> <code>/search Uploads</code>', context.bot, update)
         return
         
-    reply = sendMessage('Searching...', context.bot, update)
+    reply = sendMessage('Searching In Nick Mirror Database.....', context.bot, update)
 
     LOGGER.info(f"Searching: {search}")
         
