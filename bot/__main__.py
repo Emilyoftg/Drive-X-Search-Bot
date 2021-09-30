@@ -13,31 +13,27 @@ from bot.helper.telegram_helper import button_builder
 
 def start(update, context):
     buttons = button_builder.ButtonMaker()
-    buttons.buildbutton("Repo", "https://github.com/usmanmughalji/Drive-X-Search-Bot")
+    buttons.buildbutton("Join Our Channel", "https://t.me/MovieClubOfficiall")
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(1))
     uptime = get_readable_time((time.time() - botStartTime))
     LOGGER.info('UID: {} - UN: {} - MSG: {}'.format(update.message.chat.id,update.message.chat.username,update.message.text))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         if update.message.chat.type == "private":
-            sendMessage(f"Hey I'm Alive 🙂 \n\nSince: {uptime} \n\nWelcome to <b>Search-X Bot</b>", context.bot, update)
+            sendMessage(f"Hello 😎.\n\n<b>I Can Search For Files In Nick Mirror Database & Return A List Of Matching Files With Google Drive & Index Links.\n\n- Just Send Me The File Name.\n\nI Am Also Usable In Groups Just Add Me In Any Group & Send The Below Format 👇</b>\n\n/search <b>File Name..</b>", context.bot, update)
         else:
-            start_string = '\x1f<b>This Bot Can Search In All Of Your Google Drives!</b>\x1f'
+            start_string = '\x1f<b>Hello 😎.\n\nI Can Search For Files In Nick Mirror Database & Return A List Of Matching Files With Google Drive & Index Links.\n\n- Just Send Me The File Name.</b>\x1f'
 
             sendMessage(start_string, context.bot, update)
     else:
         sendMarkup(
-            'Oops! not a Authorized user.\n\nPlease Deploy Your Own <b>Drive-X-Search-Bot</b>.',
+            'Hello 😎.\n\n<b>I Can Search For Files In Nick Mirror Database & Return A List Of Matching Files With Google Drive & Index Links.\n\n- Just Send Me The File Name.\n\nI Am Also Usable In Groups Just Add Me In Any Group & Send The Below Format 👇</b>\n\n/search <b>File Name..</b>',
             context.bot,
             update,
             reply_markup,
         )
 
 botcmds = [
-        (f'{BotCommands.StartCommand}','Alive or Not'),
         (f'{BotCommands.ListCommand}','Searches files in Drive'),
-        (f'{BotCommands.AuthorizedUsersCommand}','List of Authorize Users'),
-        (f'{BotCommands.AuthorizeCommand}','To Auth User or Chat'),
-        (f'{BotCommands.UnAuthorizeCommand}','To De-Auth User or Chat'),
     ]
 
 def log(update, context):
@@ -52,7 +48,7 @@ def main():
     dispatcher.add_handler(log_handler)
 
     updater.start_polling(drop_pending_updates=True)
-    LOGGER.info("Yeah I'm running!")
+    LOGGER.info("Yeah boss I'm running fine!")
     signal.signal(signal.SIGINT, exit(1))
     updater.idle()
 
