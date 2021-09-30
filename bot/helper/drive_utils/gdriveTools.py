@@ -118,18 +118,18 @@ class GoogleDriveHelper:
             response = self.drive_query(parent_id, fileName)
             if response:
                 if add_title_msg:
-                    msg = f'<h3>Search Results for : {fileName}</h3>'
+                    msg = f'<h3>Search Results for : {fileName}</h3><br>#Nick Mirror #NickINC<br><br>'
                     add_title_msg = False
                 msg += f"————————————<br><b>{DRIVE_NAME[INDEX]}</b><br>————————————<br>"
                 for file in response:
                     if file.get('mimeType') == "application/vnd.google-apps.folder":  # Detect Whether Current Entity is a Folder or File.
                         furl = f"https://drive.google.com/drive/folders/{file.get('id')}"
                         msg += f"📁 <code>{file.get('name')}<br>(folder)</code><br>"
-                        msg += f"<b><a href={furl}>Drive Link</a></b>"
+                        msg += f"<b><a href={furl}>🌎 𝗗𝗥𝗜𝗩𝗘 𝗟𝗜𝗡𝗞 🌎</a></b>"
                         if INDEX_URL[INDEX] is not None:
                             url_path = requests.utils.quote(f'{file.get("name")}')
                             url = f'{INDEX_URL[INDEX]}/{url_path}/'
-                            msg += f' <b>| <a href="{url}">Index Link</a></b>'
+                            msg += f' <b>| <a href="{url}">📁 𝗜𝗡𝗗𝗘𝗫 𝗨𝗥𝗟 📁</a></b>'
                     elif file.get('mimeType') == 'application/vnd.google-apps.shortcut':
                         msg += f"⁍<a href='https://drive.google.com/drive/folders/{file.get('id')}'>{file.get('name')}" \
                         f"</a> (shortcut)"
@@ -137,11 +137,11 @@ class GoogleDriveHelper:
                     else:
                         furl = f"https://drive.google.com/uc?id={file.get('id')}&export=download"
                         msg += f"📄 <code>{file.get('name')}<br>({self.get_readable_file_size(file.get('size'))})</code><br>" \
-                        f"<b><a href={furl}>Drive Link</a></b>"
+                        f"<b><a href={furl}>🌎 𝗗𝗥𝗜𝗩𝗘 𝗟𝗜𝗡𝗞 🌎</a></b>"
                         if INDEX_URL[INDEX] is not None:
                             url_path = requests.utils.quote(f'{file.get("name")}')
                             url = f'{INDEX_URL[INDEX]}/{url_path}'
-                            msg += f'<b> | <a href="{url}">Index Link</a></b>'
+                            msg += f'<b> | <a href="{url}">📁 𝗜𝗡𝗗𝗘𝗫 𝗨𝗥𝗟 📁</a></b>'
                     msg += '<br><br>'
                     content_count += 1
                     if content_count == TELEGRAPHLIMIT :
@@ -152,7 +152,7 @@ class GoogleDriveHelper:
             self.telegraph_content.append(msg)
 
         if len(self.telegraph_content) == 0:
-            return "No Result Found ❌", None
+            return "No Result Found For This Keyword ❌", None
 
         for content in self.telegraph_content :
             self.path.append(Telegraph(access_token=telegraph_token).create_page(
@@ -165,8 +165,8 @@ class GoogleDriveHelper:
         if self.num_of_path > 1:
             self.edit_telegraph()
 
-        msg = f"<b>Found {content_count} results for <i>{fileName}</i></b>"
+        msg = f"<b>Found {content_count} Results For <i>{fileName} 🔎</i></b>"
         buttons = button_builder.ButtonMaker()
-        buttons.buildbutton("🔎 VIEW", f"https://telegra.ph/{self.path[0]}")
+        buttons.buildbutton("Click Here To See 🔎 Results", f"https://telegra.ph/{self.path[0]}")
 
         return msg, InlineKeyboardMarkup(buttons.build_menu(1))
